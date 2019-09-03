@@ -35,9 +35,9 @@ public class AdminController {
 				});
 		List<DepartmentBean> deptlist = res.getBody();
 
-		ModelAndView mv = new ModelAndView("/addAdmin");
-		mv.addObject("deptlist", deptlist);
-		return mv;
+		ModelAndView modelandview = new ModelAndView("/addAdmin");
+		modelandview.addObject("deptlist", deptlist);
+		return modelandview;
 	}
 
 	/*
@@ -68,9 +68,9 @@ public class AdminController {
 		} else {
 			Status = "Already Exist";
 		}
-		ModelAndView mv = new ModelAndView("/admin");
-		mv.addObject("insertionStatus", Status);
-		return mv;
+		ModelAndView modelandview = new ModelAndView("/admin");
+		modelandview.addObject("insertionStatus", Status);
+		return modelandview;
 	}
 	/*
 	 * This method will get user details whom Admin wants to add and pass them to
@@ -84,8 +84,8 @@ public class AdminController {
 		roles.setRoleID(3);
 		credentials.setRoles(roles);
 		String Status = "Not Added";
-		RestTemplate rt = new RestTemplate();
-		boolean insertionStatus = rt.postForObject(url, credentials, Boolean.class);
+		RestTemplate resttemplate = new RestTemplate();
+		boolean insertionStatus = resttemplate.postForObject(url, credentials, Boolean.class);
 		if (insertionStatus) {
 			Status = "Successfully added!!";
 		} else {
@@ -96,9 +96,9 @@ public class AdminController {
 			mv.addObject("insertionStatus", Status);
 			return mv;
 		} else {
-			ModelAndView mv = new ModelAndView("/AddUser");
-			mv.addObject("insertionStatus", Status);
-			return mv;
+			ModelAndView modelandview = new ModelAndView("/AddUser");
+			modelandview.addObject("insertionStatus", Status);
+			return modelandview;
 		}
 
 	}
@@ -108,21 +108,21 @@ public class AdminController {
 
 	@RequestMapping("ViewEngineers")
 	public ModelAndView viewEng() {
-		RestTemplate rt = new RestTemplate();
+		RestTemplate resttemplate = new RestTemplate();
 		String url = "http://localhost:8081/rest/getengineers";
-		ResponseEntity<List<ServiceEngineer>> res = rt.exchange(url, HttpMethod.GET, null,
+		ResponseEntity<List<ServiceEngineer>> res = resttemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<ServiceEngineer>>() {
 				});
 		List<ServiceEngineer> englist = res.getBody();
 		String url1 = "http://localhost:8081/rest/getUsers";
-		ResponseEntity<List<Credentials>> response = rt.exchange(url1, HttpMethod.GET, null,
+		ResponseEntity<List<Credentials>> response = resttemplate.exchange(url1, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Credentials>>() {
 				});
 		List<Credentials> userlist = response.getBody();
-		ModelAndView mv = new ModelAndView("/view");
-		mv.addObject("userlist", userlist);
-		mv.addObject("englist", englist);
-		return mv;
+		ModelAndView modelandview = new ModelAndView("/view");
+		modelandview.addObject("userlist", userlist);
+		modelandview.addObject("englist", englist);
+		return modelandview;
 	}
 
 }

@@ -28,12 +28,12 @@ import pojo.ServiceEngineer;
 public class LoginController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView logincontroller(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("index");
+		ModelAndView modelandview = new ModelAndView("index");
 
 		Credentials credentials = new Credentials();
 
-		mv.addObject(credentials);
-		return mv;
+		modelandview.addObject(credentials);
+		return modelandview;
 	}
 
 	/*
@@ -47,23 +47,23 @@ public class LoginController {
 		session.setAttribute("user", credentials.getUsername());
 		String role = rt.postForObject(url, credentials, String.class);
 		if (role.equals("user")) {
-			ModelAndView mv = new ModelAndView("/user");
-			mv.addObject("username", credentials.getUsername());
-			return mv;
+			ModelAndView modelandview = new ModelAndView("/user");
+			modelandview.addObject("username", credentials.getUsername());
+			return modelandview;
 		} else if (role.equals("service_engineer")) {
-			ModelAndView mv = new ModelAndView("/engineer");
-			mv.addObject("username", credentials.getUsername());
-			return mv;
+			ModelAndView modelandview1 = new ModelAndView("/engineer");
+			modelandview1.addObject("username", credentials.getUsername());
+			return modelandview1;
 		} else if (role.equals("admin")) {
 
-			ModelAndView mv = new ModelAndView("/admin");
-			mv.addObject("username", credentials.getUsername());
+			ModelAndView modelandview2 = new ModelAndView("/admin");
+			modelandview2.addObject("username", credentials.getUsername());
 
-			return mv;
+			return modelandview2;
 		} else {
-			ModelAndView mv = new ModelAndView("/index");
-			mv.addObject("error", "Invalid Credentials!!");
-			return mv;
+			ModelAndView modelandview3 = new ModelAndView("/index");
+			modelandview3.addObject("error", "Invalid Credentials!!");
+			return modelandview3;
 		}
 	}
 }

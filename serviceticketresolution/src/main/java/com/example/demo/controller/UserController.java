@@ -36,9 +36,9 @@ public class UserController {
 				});
 		List<DepartmentBean> deptlist = res.getBody();
 
-		ModelAndView mv = new ModelAndView("/raiseticket");
-		mv.addObject("deptlist", deptlist);
-		return mv;
+		ModelAndView modelandview = new ModelAndView("/raiseticket");
+		modelandview.addObject("deptlist", deptlist);
+		return modelandview;
 	}
 
 	/*
@@ -55,10 +55,10 @@ public class UserController {
 		ticket.setStart_date(LocalDate.now());
 		ticket.setStatus("pending");
 		String url = "http://localhost:8081/usercontroller/addticket";
-		RestTemplate rt = new RestTemplate();
-		String insertionStatus = rt.postForObject(url, ticket, String.class);
-		ModelAndView mv = new ModelAndView("/user");
-		return mv;
+		RestTemplate resttemplate = new RestTemplate();
+		String insertionStatus = resttemplate.postForObject(url, ticket, String.class);
+		ModelAndView modelandview = new ModelAndView("/user");
+		return modelandview;
 	}
 
 	/*
@@ -72,8 +72,8 @@ public class UserController {
 				new ParameterizedTypeReference<List<TicketBean>>() {
 				});
 		List<TicketBean> ticketlist = res.getBody();
-		ModelAndView mv = new ModelAndView("/viewticket");
-		mv.addObject("ticketlist", ticketlist);
-		return mv;
+		ModelAndView modelandview = new ModelAndView("/viewticket");
+		modelandview.addObject("ticketlist", ticketlist);
+		return modelandview;
 	}
 }
