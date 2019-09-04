@@ -47,7 +47,7 @@ td {
 			<%
 			if(list.size()>0)	{
 			for (TicketBean bean : list) {
-				if(bean.getStatus().equals("ongoing")){
+				if(bean.getStatus().equals("ongoing") && bean.getService_engineer().getServiceengineer().equals(user)){
 			%>
 			<tr>
 				<td><%=bean.getTicketid()%></td>
