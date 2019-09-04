@@ -1,0 +1,188 @@
+MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
+--
+-- Host: localhost    Database: SpringDB
+-- ------------------------------------------------------
+-- Server version	5.7.27-0ubuntu0.18.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Credentials`
+--
+
+DROP TABLE IF EXISTS `Credentials`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Credentials` (
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `roleID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`username`),
+  KEY `FK3vwdl0x85apxx41rc1hw8ks0h` (`roleID`),
+  CONSTRAINT `FK3vwdl0x85apxx41rc1hw8ks0h` FOREIGN KEY (`roleID`) REFERENCES `Roles` (`roleID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Credentials`
+--
+
+LOCK TABLES `Credentials` WRITE;
+/*!40000 ALTER TABLE `Credentials` DISABLE KEYS */;
+INSERT INTO `Credentials` VALUES ('admin','admin',1),('eng','eng',2),('manaswini11','111',3),('sssss','sssss',2),('user','user',3);
+/*!40000 ALTER TABLE `Credentials` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DepartmentBean`
+--
+
+DROP TABLE IF EXISTS `DepartmentBean`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DepartmentBean` (
+  `department_id` int(11) NOT NULL,
+  `department_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DepartmentBean`
+--
+
+LOCK TABLES `DepartmentBean` WRITE;
+/*!40000 ALTER TABLE `DepartmentBean` DISABLE KEYS */;
+INSERT INTO `DepartmentBean` VALUES (1,'ICT'),(2,'Pantry');
+/*!40000 ALTER TABLE `DepartmentBean` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Roles`
+--
+
+DROP TABLE IF EXISTS `Roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Roles` (
+  `roleID` int(11) NOT NULL,
+  `roleName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`roleID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Roles`
+--
+
+LOCK TABLES `Roles` WRITE;
+/*!40000 ALTER TABLE `Roles` DISABLE KEYS */;
+INSERT INTO `Roles` VALUES (1,'admin'),(2,'service_engineer'),(3,'user');
+/*!40000 ALTER TABLE `Roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ServiceEngineer`
+--
+
+DROP TABLE IF EXISTS `ServiceEngineer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ServiceEngineer` (
+  `serviceengineer` varchar(255) NOT NULL,
+  `currentpriority_ticket` varchar(255) DEFAULT NULL,
+  `no_of_tickets_worked` int(11) NOT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`serviceengineer`),
+  KEY `FKd5thvrjm68a4utd4908txwvpv` (`department_id`),
+  CONSTRAINT `FKd5thvrjm68a4utd4908txwvpv` FOREIGN KEY (`department_id`) REFERENCES `DepartmentBean` (`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ServiceEngineer`
+--
+
+LOCK TABLES `ServiceEngineer` WRITE;
+/*!40000 ALTER TABLE `ServiceEngineer` DISABLE KEYS */;
+INSERT INTO `ServiceEngineer` VALUES ('eng','high',9,1),('sssss','no',0,2);
+/*!40000 ALTER TABLE `ServiceEngineer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TicketBean`
+--
+
+DROP TABLE IF EXISTS `TicketBean`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TicketBean` (
+  `ticketid` int(11) NOT NULL,
+  `acutal_priority` varchar(255) DEFAULT NULL,
+  `completed_date` date DEFAULT NULL,
+  `customer` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `priority` varchar(255) DEFAULT NULL,
+  `requestedend_date` date DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  `serviceengineer` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ticketid`),
+  KEY `FKsa8tfm054yrgujcm1wtgr3k7` (`department_id`),
+  KEY `FK24brw81x0pvoweuhk1bkiq4xf` (`serviceengineer`),
+  CONSTRAINT `FK24brw81x0pvoweuhk1bkiq4xf` FOREIGN KEY (`serviceengineer`) REFERENCES `ServiceEngineer` (`serviceengineer`),
+  CONSTRAINT `FKsa8tfm054yrgujcm1wtgr3k7` FOREIGN KEY (`department_id`) REFERENCES `DepartmentBean` (`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TicketBean`
+--
+
+LOCK TABLES `TicketBean` WRITE;
+/*!40000 ALTER TABLE `TicketBean` DISABLE KEYS */;
+INSERT INTO `TicketBean` VALUES (8,NULL,'2019-08-29','user','mmmm','low','2019-08-16','2019-08-28','completed',1,'eng'),(11,NULL,'2019-08-31','user','mmmm','low','2019-08-23','2019-08-28','completed',1,'eng'),(13,NULL,'2019-08-30','user','mmmm','low','2019-08-22','2019-08-28','completed',1,'eng'),(14,NULL,'2019-08-29','user','mmmm','medium','2019-08-15','2019-08-29','completed',1,'eng'),(16,NULL,NULL,'user','mmmm','medium','2019-08-16','2019-08-30','pending',1,'eng'),(17,NULL,NULL,'user','mmmm','medium','2019-08-16','2019-08-30','pending',1,'eng'),(18,NULL,NULL,'user','mmmm','high','2019-08-16','2019-08-30','ongoing',1,'eng');
+/*!40000 ALTER TABLE `TicketBean` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hibernate_sequence`
+--
+
+DROP TABLE IF EXISTS `hibernate_sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+LOCK TABLES `hibernate_sequence` WRITE;
+/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+INSERT INTO `hibernate_sequence` VALUES (19);
+/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
