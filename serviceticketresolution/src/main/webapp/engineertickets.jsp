@@ -29,6 +29,7 @@ td {
 		</h2>
 
 		<% ArrayList<TicketBean> list = (ArrayList<TicketBean>) request.getAttribute("engtickets");
+		String user=(String)session.getAttribute("user");
 			if(list.size()>0)
 			{%>
 		<table border="1" align="center">
