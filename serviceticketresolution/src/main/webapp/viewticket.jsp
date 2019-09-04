@@ -2,96 +2,81 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="pojo.*"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Tickets List</title>
+<title>Insert title here</title>
 </head>
-<center>
-	<body>
-		<%
-List<TicketBean> tickets =(List<TicketBean>) request.getAttribute("ticketlist");
+<body>
+	<%
+		ArrayList<TicketBean> list = (ArrayList<TicketBean>) request.getAttribute("ticketlist");
+String user=(String)session.getAttribute("user");
+
+if(list.size()>0)
+{
 %>
-		<%if(tickets.size()>0){ %>
-		<table border="1">
-			<thead>
-				<h3>Solved Tickets</h3>
-				<tr>
-
-					<th>Ticket Id</th>
-					<th>Issue Date</th>
-					<th>Department</th>
-					<th>Requested EndDate</th>
-					<th>Completed Date</th>
-
-
-				</tr>
-			</thead>
-
-
-			<%
-				
-			for (TicketBean bean : tickets) {
-				if(bean.getCustomer().equals(session.getAttribute("user"))&&bean.getStatus().equals("completed"))
-				{
- %>
+	<table border="1">
+		<thead>
+			<h3>Solved Tickets</h3>
 			<tr>
 
-				<td><%=bean.getTicketid()%></td>
-				<td><%=bean.getStart_date()%></td>
-				<td><%=bean.getDepartment().getDepartment_name()%></td>
-				<td><%=bean.getRequestedend_date()%></td>
-				<td><%=bean.getCompleted_date()%></td>
+				<th>Ticket Id</th>
+				<th>Issue Date</th>
+				<th>Department</th>
+				<th>Requested EndDate</th>
+				<th>Completed Date</th>
+
+
 			</tr>
-			<%
-				}
-			}
-			%>
-		</table>
-		<table border="1">
-			<thead>
-				<h3>Unsolved Tickets</h3>
-				<tr>
-
-					<th>Ticket Id</th>
-					<th>Issue Date</th>
-					<th>Department</th>
-					<th>Requested EndDate</th>
-				</tr>
-			</thead>
+		</thead>
 
 
-			<%
+		<%
 				
-				
-			for (TicketBean bean : tickets) {
-				if(bean.getCustomer().equals(session.getAttribute("user"))
-						&& bean.getStatus().equals("ongoing")||bean.getStatus().equals("pending"))
+			for (TicketBean bean : list) {
+				if(bean.getStatus().equals("completed") && bean.getCustomer().equals(user))
 				{
  %>
+		<tr>
+
+			<td><%=bean.getTicketid()%></td>
+			<td><%=bean.getStart_date()%></td>
+			<td><%=bean.getDepartment().getDepartment_name()%></td>
+			<td><%=bean.getRequestedend_date()%></td>
+			<td><%=bean.getCompleted_date()%></td>
+		</tr>
+		<%} }}%>
+	</table>
+	<table border="1">
+		<thead>
+			<h3>Unsolved Tickets</h3>
 			<tr>
 
-				<td><%=bean.getTicketid()%></td>
-				<td><%=bean.getStart_date()%></td>
-				<td><%=bean.getDepartment().getDepartment_name()%></td>
-				<td><%=bean.getRequestedend_date()%></td>
+				<th>Ticket Id</th>
+				<th>Issue Date</th>
+				<th>Department</th>
+				<th>Requested EndDate</th>
+
+
 
 			</tr>
-			<%
-				}
-			}
-			%>
-		</table>
-		<%} else
-		{%>
-		No Tickets Raiseed!!
-		<%} %>
-	<input type="button" value="back" onclick="history.back()">
-</center>
+		</thead>
+		<%
+		
+			for (TicketBean bean : list) {
+				if((!bean.getStatus().equals("completed")) && bean.getCustomer().equals(user))
+				{
+					
+ %>
+<tr>
+	<td><%=bean.getTicketid()%></td>
+	<td><%=bean.getStart_date()%></td>
+	<td><%=bean.getDepartment().getDepartment_name()%></td>
+	<td><%=bean.getRequestedend_date()%></td>
 
-<br>
-<br>
+</tr>
+		<%} }%>
+	</table>
 </body>
 </html>
