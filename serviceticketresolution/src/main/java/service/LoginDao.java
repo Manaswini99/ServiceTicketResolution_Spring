@@ -1,14 +1,13 @@
-package com.example.demo.repository;
+package service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 import pojo.Credentials;
 import pojo.ServiceEngineer;
-
+import repository.*;
 @Service
 public class LoginDao {
 	@Autowired

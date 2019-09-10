@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package controller;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class EngineerController {
  */
 @RequestMapping("/ViewEngineerTickets")
 public ModelAndView viewEngineerTickets() {
-	String url = "http://localhost:8081/engineercontroller/viewengtickets";
+	String url = "http://localhost:8181/engineercontroller/viewengtickets";
 	RestTemplate restTemplate = new RestTemplate();
 	ResponseEntity<List<TicketBean>> response = restTemplate.exchange(url, HttpMethod.GET, null,
 			new ParameterizedTypeReference<List<TicketBean>>() {
@@ -39,7 +39,7 @@ public ModelAndView viewEngineerTickets() {
  */
 @RequestMapping("/completeticket")
 public String completeTicket(@RequestParam("id") int id) {
-	String url = "http://localhost:8081/engineercontroller/completeticket";
+	String url = "http://localhost:8181/engineercontroller/completeticket";
 	RestTemplate resttemplate = new RestTemplate();
 	String insertionStatus = resttemplate.postForObject(url,id, String.class);
 	return "redirect:/ViewEngineerTickets";
@@ -51,7 +51,7 @@ public String completeTicket(@RequestParam("id") int id) {
 
 @RequestMapping("/perseverity")
 public ModelAndView averagePerPriority() {
-	String url = "http://localhost:8081/engineercontroller/avgperpriority";
+	String url = "http://localhost:8181/engineercontroller/avgperpriority";
 	RestTemplate rtemp = new RestTemplate();
 	ResponseEntity<List<String>> res = rtemp.exchange(url, HttpMethod.GET, null,
 			new ParameterizedTypeReference<List<String>>() {
@@ -67,13 +67,13 @@ public ModelAndView averagePerPriority() {
  */
 @RequestMapping("/perengineer")
 public ModelAndView averagePerEngineer() {
-	String url = "http://localhost:8081/engineercontroller/avgperengineer";
+	String url = "http://localhost:8181/engineercontroller/avgperengineer";
 	RestTemplate resttemp = new RestTemplate();
 	ResponseEntity<List<String>> res = resttemp.exchange(url, HttpMethod.GET, null,
 			new ParameterizedTypeReference<List<String>>() {
 			});
 			List<String> avgperEngineer= res.getBody();
-			System.out.println(avgperEngineer+"back");
+			
 			ModelAndView modelandview = new ModelAndView("AveragePerEngineer");
 			modelandview.addObject("avgperEngineer",avgperEngineer);
 			return modelandview;
@@ -84,7 +84,7 @@ public ModelAndView averagePerEngineer() {
 @RequestMapping("/ticketname")
 public ModelAndView ticketAge(@RequestParam("ticketname") Integer ticketid) {
 	
-	String url = "http://localhost:8081/engineercontroller/ticketage/"+ticketid;
+	String url = "http://localhost:8181/engineercontroller/ticketage/"+ticketid;
 	RestTemplate temp = new RestTemplate();
 	Long age = temp.getForObject(url, Long.class);
 	ModelAndView modelandview = new ModelAndView("/ticketage");
@@ -97,7 +97,7 @@ public ModelAndView ticketAge(@RequestParam("ticketname") Integer ticketid) {
  */
 @RequestMapping("/changepriority")
 public String changePriority(@RequestParam("ticket") int ticket,@RequestParam("newpriority") String newpriority) {
-	String url = "http://localhost:8081/engineercontroller/updatePriority/"+ticket+"/"+newpriority;
+	String url = "http://localhost:8181/engineercontroller/updatePriority/"+ticket+"/"+newpriority;
 	RestTemplate resttemplate = new RestTemplate();
 	boolean insertionStatus = resttemplate.postForObject(url,null, Boolean.class);
 	return "redirect:/ViewEngineerTickets";

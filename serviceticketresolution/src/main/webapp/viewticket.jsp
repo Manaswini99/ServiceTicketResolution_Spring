@@ -69,13 +69,18 @@ if(list.size()>0)
 				{
 					
  %>
-<tr>
-	<td><%=bean.getTicketid()%></td>
-	<td><%=bean.getStart_date()%></td>
-	<td><%=bean.getDepartment().getDepartment_name()%></td>
-	<td><%=bean.getRequestedend_date()%></td>
 
-</tr>
+
+
+
+		<tr>
+
+			<td><%=bean.getTicketid()%></td>
+			<td><%=bean.getStart_date()%></td>
+			<td><%=bean.getDepartment().getDepartment_name()%></td>
+			<td><%=bean.getRequestedend_date()%></td>
+
+		</tr>
 		<%} }%>
 	</table>
 </body>

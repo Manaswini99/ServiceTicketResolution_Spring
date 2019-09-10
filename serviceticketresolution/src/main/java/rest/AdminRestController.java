@@ -1,15 +1,14 @@
-package com.example.demo.controller;
+package rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.repository.AdminDao;
-
 import pojo.Credentials;
 import pojo.ServiceEngineer;
+import service.*;
 
 @RestController
 @RequestMapping("/admincontroller")
@@ -22,7 +21,7 @@ public class AdminRestController {
 	 */
 	@RequestMapping(value = "/addcred", method = RequestMethod.POST)
 	public boolean addingSe(@RequestBody Credentials loginbean) {
-		System.out.println(loginbean);
+		
 		return admindao.addSe(loginbean);
 	}
 
@@ -31,7 +30,7 @@ public class AdminRestController {
 	 */
 	@RequestMapping(value = "/addtose", method = RequestMethod.POST)
 	public boolean addingEngineer(@RequestBody ServiceEngineer engineerbean) {
-		System.out.println(engineerbean);
+		
 		return admindao.addEngineer(engineerbean);
 
 	}
@@ -47,7 +46,6 @@ public class AdminRestController {
 
 	@RequestMapping(value = "/deletese", method = RequestMethod.POST)
 	public boolean deletese(@RequestBody String id) {
-		System.out.println(id + "rest");
 		return admindao.deleteEngineer(id);
 	}
 }

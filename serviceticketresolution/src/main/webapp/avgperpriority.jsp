@@ -3,12 +3,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+form {
+	background-color: powderblue;
+	text-align: center;
+	border-style: solid;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	margin-right: 150px;
+	margin-left: 80px;
+}
+
+td {
+	text-align: left;
+}
+</style>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Priorities Severity</title>
 </head>
-<body>
-
+<body align:center>
+<h2>Average Time Taken Per Priority</h2>
+<form>
 	<br>
 	<br>
 	<%
@@ -27,5 +42,6 @@
 	</p>
 	<br>
 	<br>
+	</form>
 </body>
 </html>

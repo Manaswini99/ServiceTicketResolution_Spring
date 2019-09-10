@@ -38,7 +38,7 @@ td {
 		</h2>
 
 		<a href="addeng">Add ServiceEngineer</a>| <a href="AddUser.jsp">Add
-			User</a>| <a href="View">View</a></br>
+			User</a>| <a href="ViewEngineers">View</a></br>
 
 
 

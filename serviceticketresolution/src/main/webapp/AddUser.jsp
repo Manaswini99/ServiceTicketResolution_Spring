@@ -24,8 +24,9 @@
 			</tr>
 			<tr>
 				<td><input type="submit" name="Add" /></td>
+				<td><input type="button" value="back" onclick="history.back()"></td>
 			</tr>
-			<input type="button" value="back" onclick="history.back()">
+			
 			<br>
 			<br>
 		</table>

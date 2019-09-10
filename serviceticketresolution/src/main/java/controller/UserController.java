@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +29,7 @@ public class UserController {
 	@RequestMapping("/raiseticket")
 	public ModelAndView Raiseticket() {
 
-		String url = "http://localhost:8081/usercontroller/viewdeptlist";
+		String url = "http://localhost:8181/usercontroller/viewdeptlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<DepartmentBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<DepartmentBean>>() {
@@ -54,7 +54,7 @@ public class UserController {
 		ticket.setCustomer((String) session.getAttribute("user"));
 		ticket.setStart_date(LocalDate.now());
 		ticket.setStatus("pending");
-		String url = "http://localhost:8081/usercontroller/addticket";
+		String url = "http://localhost:8181/usercontroller/addticket";
 		RestTemplate resttemplate = new RestTemplate();
 		String insertionStatus = resttemplate.postForObject(url, ticket, String.class);
 		ModelAndView modelandview = new ModelAndView("/user");
@@ -66,7 +66,7 @@ public class UserController {
 	 */
 	@RequestMapping("/userview")
 	public ModelAndView viewTickets() {
-		String url = "http://localhost:8081/usercontroller/viewticketlist";
+		String url = "http://localhost:8181/usercontroller/viewticketlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<TicketBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<TicketBean>>() {

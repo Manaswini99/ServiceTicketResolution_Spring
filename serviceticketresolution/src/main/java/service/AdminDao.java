@@ -1,15 +1,21 @@
-package com.example.demo.repository;
+package service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import pojo.Credentials;
 import pojo.ServiceEngineer;
+import repository.*;
 
 @Service
+@Component
+@EnableAutoConfiguration
 public class AdminDao {
+	
 	@Autowired
 	repo repo;
 

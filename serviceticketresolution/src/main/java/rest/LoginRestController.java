@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package rest;
 
 import java.util.List;
 
@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.repository.EngineerDao;
-import com.example.demo.repository.LoginDao;
-import com.example.demo.repository.repo;
-
 import pojo.Credentials;
 import pojo.ServiceEngineer;
+import service.*;
+
 
 @RestController
 @RequestMapping("/rest")
@@ -32,6 +30,7 @@ public class LoginRestController {
 
 	@RequestMapping(value = "/getengineers", method = RequestMethod.GET)
 	public List<ServiceEngineer> getEngineers() {
+		
 		return engdao.getEngineerList();
 	}
 

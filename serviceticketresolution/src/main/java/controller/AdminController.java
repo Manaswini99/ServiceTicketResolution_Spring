@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package controller;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class AdminController {
 	 */
 	@RequestMapping("/addeng")
 	public ModelAndView addEng() {
-		String url = "http://localhost:8081/usercontroller/viewdeptlist";
+		String url = "http://localhost:8181/usercontroller/viewdeptlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<DepartmentBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<DepartmentBean>>() {
@@ -46,7 +46,7 @@ public class AdminController {
 	 */
 	@RequestMapping("AddingEngineer")
 	public ModelAndView addEngineer(Credentials credentials, HttpServletRequest request, HttpServletResponse response) {
-		String url = "http://localhost:8081/admincontroller/addcred";
+		String url = "http://localhost:8181/admincontroller/addcred";
 		Roles roles = new Roles();
 		roles.setRoleID(2);
 		credentials.setRoles(roles);
@@ -61,7 +61,7 @@ public class AdminController {
 			se.setCurrentpriority_ticket("no");
 			se.setNo_of_tickets_worked(0);
 			se.setDepartment(dep);
-			String url1 = "http://localhost:8081/admincontroller/addtose";
+			String url1 = "http://localhost:8181/admincontroller/addtose";
 			RestTemplate rt1 = new RestTemplate();
 			String Status1 = rt1.postForObject(url1, se, String.class);
 			Status = "Added Succesfull!";
@@ -79,7 +79,7 @@ public class AdminController {
 
 	@RequestMapping("adduser")
 	public ModelAndView addUser(Credentials credentials) {
-		String url = "http://localhost:8081/admincontroller/addusercred";
+		String url = "http://localhost:8181/admincontroller/addusercred";
 		Roles roles = new Roles();
 		roles.setRoleID(3);
 		credentials.setRoles(roles);
@@ -105,16 +105,15 @@ public class AdminController {
 	/*
 	 * This method allows Admin to view all the Engineers and Users
 	 */
-
 	@RequestMapping("ViewEngineers")
 	public ModelAndView viewEng() {
 		RestTemplate resttemplate = new RestTemplate();
-		String url = "http://localhost:8081/rest/getengineers";
+		String url = "http://localhost:8181/rest/getengineers";
 		ResponseEntity<List<ServiceEngineer>> res = resttemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<ServiceEngineer>>() {
 				});
 		List<ServiceEngineer> englist = res.getBody();
-		String url1 = "http://localhost:8081/rest/getUsers";
+		String url1 = "http://localhost:8181/rest/getUsers";
 		ResponseEntity<List<Credentials>> response = resttemplate.exchange(url1, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Credentials>>() {
 				});

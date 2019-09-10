@@ -7,16 +7,27 @@
 <head>
 <meta charset="UTF-8">
 <title>List</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+th {
+  text-align: left;
+}
+</style>
 </head>
-<body bgcolor="gray">
-	<center>
-		<h2>Engineers</h2>
-	</center>
+<body >
+	
 	<%
 		ArrayList<ServiceEngineer> list = (ArrayList<ServiceEngineer>) request.getAttribute("englist");
 		if (list.size() > 0) {
 	%>
 	<table border="1" align="center">
+	<caption><b>Service Engineers</b></caption>
 		<thead>
 			<tr>
 				<th>Service Engineer</th>
