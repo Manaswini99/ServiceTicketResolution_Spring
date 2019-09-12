@@ -1,12 +1,10 @@
 package service;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import pojo.Credentials;
 import pojo.ServiceEngineer;
 import repository.*;
@@ -14,40 +12,38 @@ import repository.*;
 @Service
 @Component
 @EnableAutoConfiguration
-public class AdminDao {
+public class AdminService {
 	
 	@Autowired
-	repo repo;
+	LoginRepo loginRepo;
 
 	@Autowired
-	EngineerRepo engrepo;
-
-	@Autowired
-	UserRepo userepo;
-
+	EngineerRepo engineerRepo;
+	
+	//adds ServiceEngineer
 	public boolean addSe(Credentials loginbean) {
-		if (!repo.existsById(loginbean.getUsername())) {
-			repo.save(loginbean);
+		if (!loginRepo.existsById(loginbean.getUsername())) {
+			loginRepo.save(loginbean);
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
 
 	public boolean addEngineer(ServiceEngineer engineerbean) {
-		if (!engrepo.existsById(engineerbean.getServiceengineer())) {
-			engrepo.save(engineerbean);
+		if (!engineerRepo.existsById(engineerbean.getServiceengineer())) {
+			engineerRepo.save(engineerbean);
 		}
 		return true;
 	}
 
 	public boolean deleteEngineer(String id) {
 		String username = id;
-		Optional<ServiceEngineer> se = engrepo.findById(username);
-		repo.deleteById(id);
-		engrepo.delete(se.get());
+		Optional<ServiceEngineer> se = engineerRepo.findById(username);
+		loginRepo.deleteById(id);
+		engineerRepo.delete(se.get());
 		return true;
-
 	}
 
 }

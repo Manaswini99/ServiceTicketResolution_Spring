@@ -11,27 +11,43 @@ import org.springframework.web.bind.annotation.RestController;
 import pojo.DepartmentBean;
 import pojo.TicketBean;
 import service.*;
-
+/**
+ *
+ * @author manaswini
+ *
+ */
 @RestController
-@RequestMapping("/usercontroller")
+@RequestMapping("/userController")
 public class UserRestController {
 	
 	@Autowired
-	UserDao userdao;
-
+	UserService userservice;
+	
+	/**
+	 * 
+	 * @return List<DepartmentBean
+	 */
 	@RequestMapping(value = "/viewdeptlist", method = RequestMethod.GET)
 	public List<DepartmentBean> getdeptlist(){
-		return 	userdao.getDeptList();
+		return 	userservice.getDeptList();
 	}
 	
+	/**
+	 * 
+	 * @param ticket
+	 * @return status of ticket
+	 */
 	@RequestMapping(value = "/addticket", method = RequestMethod.POST)
-public Boolean addTicket(@RequestBody TicketBean ticket){
-		System.out.println("rest"+ticket);
-		return 	userdao.insertTicket(ticket);
+	public Boolean addTicket(@RequestBody TicketBean ticket){
+		return 	userservice.insertTicket(ticket);
 	}
 	
+	/**
+	 * 
+	 * @return List<TicketBean>
+	 */
 	@RequestMapping(value = "/viewticketlist", method = RequestMethod.GET)
 	public List<TicketBean> getticketlist(){
-		return 	userdao.getTicketList();
+		return 	userservice.getTicketList();
 	}
 }

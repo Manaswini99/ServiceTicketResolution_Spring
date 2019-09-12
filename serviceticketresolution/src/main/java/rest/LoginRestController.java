@@ -12,30 +12,46 @@ import pojo.Credentials;
 import pojo.ServiceEngineer;
 import service.*;
 
-
+/**
+ * 
+ * @author manaswini
+ *
+ */
 @RestController
 @RequestMapping("/rest")
 public class LoginRestController {
 
 	@Autowired
-	LoginDao ld;
+	LoginService loginservice;
 
 	@Autowired
-	EngineerDao engdao;
-
-	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	EngineerService engineerservice;
+	
+	/**
+	 * 
+	 * @param loginbean
+	 * @return status of insertion
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String insert(@RequestBody Credentials loginbean) {
-		return ld.check(loginbean);
+		return loginservice.check(loginbean);
 	}
-
+	
+	/**
+	 * 
+	 * @return List<ServiceEngineer>
+	 */
 	@RequestMapping(value = "/getengineers", method = RequestMethod.GET)
 	public List<ServiceEngineer> getEngineers() {
-		
-		return engdao.getEngineerList();
+		return engineerservice.getEngineerList();
 	}
-
+	
+	/**
+	 * 
+	 * @return List<Credentials>
+	 */
 	@RequestMapping(value = "/getUsers", method = RequestMethod.GET)
 	public List<Credentials> getUsers() {
-		return ld.getUsers();
+		return loginservice.getUsers();
 	}
 }

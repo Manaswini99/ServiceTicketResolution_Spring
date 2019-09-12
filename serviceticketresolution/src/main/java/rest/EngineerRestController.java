@@ -16,43 +16,42 @@ import pojo.TicketBean;
 @RequestMapping("/engineercontroller")
 public class EngineerRestController {
 	@Autowired
-	EngineerDao engineerdao;
+	EngineerService engineerservice;
 
 	@RequestMapping(value = "/viewengtickets", method = RequestMethod.GET)
 	public List<TicketBean> getTicketList()
 	{
-		return engineerdao.getTicketList();
+		return engineerservice.getTicketList();
 	}
 	@RequestMapping(value="/completeticket",method = RequestMethod.POST)
 	public void completeTicket(@RequestBody int id) {
-		engineerdao.completeTicket(id);
+		engineerservice.completeTicket(id);
 	}
 	
 	@RequestMapping(value = "/avgperpriority", method = RequestMethod.GET)
 	public List<String> getAvgPerPriority()
 	{
-		return engineerdao.getavgPriority();
+		return engineerservice.getavgPriority();
 	}
 	
 	@RequestMapping(value = "/avgperengineer", method = RequestMethod.GET)
 	public List<String> getAvgPerEngineer()
 	{
-		return engineerdao.getavgperEngineer();
+		return engineerservice.getavgperEngineer();
 	}
 	
 	
 	@RequestMapping(value = "/ticketage/{id}", method = RequestMethod.GET)
 	public Long getTicketAge(@PathVariable("id")Integer ticketid)
 	{
-		
-		return engineerdao.getTicketName(ticketid);
+		return engineerservice.getTicketName(ticketid);
 	}
 	
-	@RequestMapping(value = "/updatePriority/{ticket}/{newpriority}", method = RequestMethod.POST)
+	@RequestMapping(value = "/updatePriority/{ticket}/{newpriority}", method = RequestMethod.PUT)
 	public boolean updatePriority(@PathVariable("ticket") int  ticket,@PathVariable("newpriority") String newpriority)
 	{
 		
-		 engineerdao.updateTicketPriority(newpriority,ticket);
+		engineerservice.updateTicketPriority(newpriority,ticket);
 		 return true;
 	}
 	

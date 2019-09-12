@@ -9,7 +9,7 @@ import pojo.ServiceEngineer;
 import pojo.TicketBean;
 import repository.*;
 @Service
-public class EngineerDao {
+public class EngineerService {
 	@Autowired
 	UserRepo repo;
 
@@ -20,9 +20,7 @@ public class EngineerDao {
 		return repo.findAll();
 	}
 	
-/*
- * This method will set completed date and assings a pending ticket if any present
- */
+	//This method will complete and assings a pending ticket to engineer if any present
 	public void completeTicket(int id) {
 		repo.setCompleteDate(id);
 		repo.complete(id);
@@ -40,22 +38,23 @@ public class EngineerDao {
 			engrepo.updatecurrentpriority(ticket.get().getService_engineer().getServiceengineer(), "no");
 		}
 	}
-
+	
+	//This returns average time taken per priority
 	public List<String> getavgPriority() {
 		List<String> avglistPriority = new ArrayList<String>();
 		avglistPriority.add(repo.getavgperlowpriority());
 		avglistPriority.add(repo.getavgpermediumpriority());
 		avglistPriority.add(repo.getavgperhighpriority());
-
 		return avglistPriority;
 	}
-
+	
+	//return list of ServiceEngineers
 	public List<ServiceEngineer> getEngineerList() {
 		return engrepo.findAll();
 	}
-
+	
+	//returns average time taken per engineer
 	public List<String> getavgperEngineer() {
-
 		List<String> avgservice = new ArrayList<String>();
 		List<ServiceEngineer> seList = engrepo.findAll();
 
@@ -70,11 +69,12 @@ public class EngineerDao {
 		}
 		return avgservice;
 	}
-
+	//returns age of ticket
 	public Long getTicketName(Integer ticketid) {
 		return repo.getTicketAge(ticketid);
 	}
 
+	//updates ticket priority
 	public int updateTicketPriority(String newpriority, int ticket) {
 		return repo.updateTicketPriority(newpriority, ticket);
 	}

@@ -1,69 +1,62 @@
 package controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import pojo.Credentials;
-import pojo.DepartmentBean;
-import pojo.Roles;
-import pojo.ServiceEngineer;
+import comakeit.assesment.app.Constants;
+import pojo.*;
 
 @Controller
 public class AdminController {
-
-	/*
-	 * This method will get department List and redirects to Add Engineer jsp page
-	 */
+	@Autowired
+	Environment environment;
+	
+	//redirects to add Engineer jsp with departments available
 	@RequestMapping("/addeng")
 	public ModelAndView addEng() {
-		String url = "http://localhost:8181/usercontroller/viewdeptlist";
+		String url = Constants.url+"/userController/viewdeptlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<DepartmentBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<DepartmentBean>>() {
 				});
 		List<DepartmentBean> deptlist = res.getBody();
-
 		ModelAndView modelandview = new ModelAndView("/addAdmin");
 		modelandview.addObject("deptlist", deptlist);
 		return modelandview;
 	}
 
-	/*
-	 * This method gets details of Engineer to be added and passes them
-	 *  to Admin Rest Controller
-	 */
+	//Adds Engineer
 	@RequestMapping("AddingEngineer")
 	public ModelAndView addEngineer(Credentials credentials, HttpServletRequest request, HttpServletResponse response) {
-		String url = "http://localhost:8181/admincontroller/addcred";
+		String url = Constants.url+"/adminController/addCredentials";
 		Roles roles = new Roles();
 		roles.setRoleID(2);
 		credentials.setRoles(roles);
-		RestTemplate rt = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 		String Status = null;
-		boolean insertionStatus = rt.postForObject(url, credentials, Boolean.class);
+		boolean insertionStatus = restTemplate.postForObject(url, credentials, Boolean.class);
 		if (insertionStatus) {
-			DepartmentBean dep = new DepartmentBean();
-			dep.setDepartment_id(Integer.parseInt(request.getParameter("department_id")));
+			DepartmentBean department = new DepartmentBean();
+			department.setDepartment_id(Integer.parseInt(request.getParameter("department_id")));
 			ServiceEngineer se = new ServiceEngineer();
 			se.setServiceengineer(credentials.getUsername());
 			se.setCurrentpriority_ticket("no");
 			se.setNo_of_tickets_worked(0);
-			se.setDepartment(dep);
-			String url1 = "http://localhost:8181/admincontroller/addtose";
-			RestTemplate rt1 = new RestTemplate();
-			String Status1 = rt1.postForObject(url1, se, String.class);
+			se.setDepartment(department);
+			String url1 = Constants.url+"/adminController/addEngineer";
+			RestTemplate resttemplate1 = new RestTemplate();
+			String Status1 = resttemplate1.postForObject(url1, se, String.class);
 			Status = "Added Succesfull!";
 		} else {
 			Status = "Already Exist";
@@ -72,14 +65,11 @@ public class AdminController {
 		modelandview.addObject("insertionStatus", Status);
 		return modelandview;
 	}
-	/*
-	 * This method will get user details whom Admin wants to add and pass them to
-	 *  Admin rest controller 
-	 */
-
+	
+	//Administrator adds user
 	@RequestMapping("adduser")
 	public ModelAndView addUser(Credentials credentials) {
-		String url = "http://localhost:8181/admincontroller/addusercred";
+		String url = Constants.url+"/adminController/addUserCredentials";
 		Roles roles = new Roles();
 		roles.setRoleID(3);
 		credentials.setRoles(roles);
@@ -102,18 +92,17 @@ public class AdminController {
 		}
 
 	}
-	/*
-	 * This method allows Admin to view all the Engineers and Users
-	 */
+	
+	//Administrator views all engineers and users
 	@RequestMapping("ViewEngineers")
 	public ModelAndView viewEng() {
 		RestTemplate resttemplate = new RestTemplate();
-		String url = "http://localhost:8181/rest/getengineers";
+		String url = Constants.url+"/rest/getengineers";
 		ResponseEntity<List<ServiceEngineer>> res = resttemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<ServiceEngineer>>() {
 				});
 		List<ServiceEngineer> englist = res.getBody();
-		String url1 = "http://localhost:8181/rest/getUsers";
+		String url1 = Constants.url+"/rest/getUsers";
 		ResponseEntity<List<Credentials>> response = resttemplate.exchange(url1, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Credentials>>() {
 				});

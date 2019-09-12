@@ -16,26 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import comakeit.assesment.app.Constants;
 import pojo.DepartmentBean;
 import pojo.TicketBean;
 
 @Controller
 public class UserController {
 
-	/*
-	 * This method will redirect to raise ticket jsp
-	 * 
-	 */
+	//redirects to raiseticket.jsp
 	@RequestMapping("/raiseticket")
 	public ModelAndView Raiseticket() {
-
-		String url = "http://localhost:8181/usercontroller/viewdeptlist";
+		String url = Constants.url+"/userController/viewdeptlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<DepartmentBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<DepartmentBean>>() {
 				});
 		List<DepartmentBean> deptlist = res.getBody();
-
 		ModelAndView modelandview = new ModelAndView("/raiseticket");
 		modelandview.addObject("deptlist", deptlist);
 		return modelandview;
@@ -54,7 +50,7 @@ public class UserController {
 		ticket.setCustomer((String) session.getAttribute("user"));
 		ticket.setStart_date(LocalDate.now());
 		ticket.setStatus("pending");
-		String url = "http://localhost:8181/usercontroller/addticket";
+		String url = Constants.url+"/userController/addticket";
 		RestTemplate resttemplate = new RestTemplate();
 		String insertionStatus = resttemplate.postForObject(url, ticket, String.class);
 		ModelAndView modelandview = new ModelAndView("/user");
@@ -66,7 +62,7 @@ public class UserController {
 	 */
 	@RequestMapping("/userview")
 	public ModelAndView viewTickets() {
-		String url = "http://localhost:8181/usercontroller/viewticketlist";
+		String url = Constants.url+"/userController/viewticketlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<TicketBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<TicketBean>>() {

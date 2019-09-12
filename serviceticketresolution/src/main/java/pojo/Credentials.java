@@ -5,10 +5,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.stereotype.Component;
 
 @Entity
-
 public class Credentials {
 
 	@Id
