@@ -66,7 +66,7 @@ public class AdminController {
 		return modelandview;
 	}
 	
-	//Administrator adds user
+	//adds user
 	@RequestMapping("adduser")
 	public ModelAndView addUser(Credentials credentials) {
 		String url = Constants.url+"/adminController/addUserCredentials";
@@ -93,9 +93,9 @@ public class AdminController {
 
 	}
 	
-	//Administrator views all engineers and users
+	//views all engineers and users
 	@RequestMapping("ViewEngineers")
-	public ModelAndView viewEng() {
+	public ModelAndView viewAll() {
 		RestTemplate resttemplate = new RestTemplate();
 		String url = Constants.url+"/rest/getengineers";
 		ResponseEntity<List<ServiceEngineer>> res = resttemplate.exchange(url, HttpMethod.GET, null,

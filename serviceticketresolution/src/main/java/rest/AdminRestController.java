@@ -56,7 +56,7 @@ public class AdminRestController {
 	 * @return status
 	 */
 	@RequestMapping(value = "/deletese", method = RequestMethod.POST)
-	public boolean deletese(@RequestBody String id) {
+	public boolean deleteServiceEngineer(@RequestBody String id) {
 		return adminservice.deleteEngineer(id);
 	}
 }

@@ -17,7 +17,7 @@ import pojo.Credentials;
 @RequestMapping("/control")
 public class LoginController {
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView logincontroller(HttpServletRequest request) {
+	public ModelAndView loginController(HttpServletRequest request) {
 		ModelAndView modelandview = new ModelAndView("index");
 		Credentials credentials = new Credentials();
 		modelandview.addObject(credentials);
@@ -29,7 +29,7 @@ public class LoginController {
 	 * pages based on role
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView logincontrol(Credentials credentials, HttpSession session) {
+	public ModelAndView loginControl(Credentials credentials, HttpSession session) {
 		String url = Constants.url+"/rest/login";
 		RestTemplate rt = new RestTemplate();
 		session.setAttribute("user", credentials.getUsername());
@@ -39,19 +39,19 @@ public class LoginController {
 			modelandview.addObject("username", credentials.getUsername());
 			return modelandview;
 		} else if (role.equals("service_engineer")) {
-			ModelAndView modelandview1 = new ModelAndView("/engineer");
-			modelandview1.addObject("username", credentials.getUsername());
-			return modelandview1;
+			ModelAndView modelandviewEng = new ModelAndView("/engineer");
+			modelandviewEng.addObject("username", credentials.getUsername());
+			return modelandviewEng;
 		} else if (role.equals("admin")) {
 
-			ModelAndView modelandview2 = new ModelAndView("/admin");
-			modelandview2.addObject("username", credentials.getUsername());
+			ModelAndView modelandviewAdmin = new ModelAndView("/admin");
+			modelandviewAdmin.addObject("username", credentials.getUsername());
 
-			return modelandview2;
+			return modelandviewAdmin;
 		} else {
-			ModelAndView modelandview3 = new ModelAndView("/index");
-			modelandview3.addObject("error", "Invalid Credentials!!");
-			return modelandview3;
+			ModelAndView modelandviewInvalid = new ModelAndView("/index");
+			modelandviewInvalid.addObject("error", "Invalid Credentials!!");
+			return modelandviewInvalid;
 		}
 	}
 }

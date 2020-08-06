@@ -25,7 +25,7 @@ public class UserController {
 
 	//redirects to raiseticket.jsp
 	@RequestMapping("/raiseticket")
-	public ModelAndView Raiseticket() {
+	public ModelAndView raiseTicket() {
 		String url = Constants.url+"/userController/viewdeptlist";
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<List<DepartmentBean>> res = restTemplate.exchange(url, HttpMethod.GET, null,
@@ -42,7 +42,7 @@ public class UserController {
 	 * it can be assigned to corresponding department Engineer
 	 */
 	@RequestMapping("/ticket")
-	public ModelAndView AddTicket(TicketBean ticket, HttpSession session, HttpServletRequest request) {
+	public ModelAndView addTicket(TicketBean ticket, HttpSession session, HttpServletRequest request) {
 		ticket.setRequestedend_date(LocalDate.parse(request.getParameter("end_date")));
 		DepartmentBean dep = new DepartmentBean();
 		dep.setDepartment_id(Integer.parseInt(request.getParameter("department_id")));
